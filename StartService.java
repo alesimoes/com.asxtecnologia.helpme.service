@@ -2,6 +2,7 @@ package com.asxtecnologia.helpme.service;
 
 
 
+import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -31,21 +32,31 @@ public class StartService extends Service{
        
     	 int start = super.onStartCommand(intent, flags, startId);
          
-    	 // Serviço de rastreamento.
-         final tracker tk = new tracker();
-   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));
- 		
-        
- 		 //intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
-         Toast.makeText(getApplicationContext(), "Gps Iniciado.",
-                 Toast.LENGTH_SHORT).show();      
-         
-         
-         // Serviço de conexão.
-         final AsxSocket socket = new AsxSocket(getApplicationContext());
- 	 
- 		Toast.makeText(getApplicationContext(), "Conexão iniciada.",
- 	                Toast.LENGTH_SHORT).show(); 
+    	 // tenta abrir o arquivo com o token.
+    	 try {
+			Token.GetToken(openFileInput(Token.File));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	 // Se já tivr efetuado login starta o processo.
+    	 if(Token.Token!="")
+    	 {
+    	 
+	    	 // Serviço de rastreamento.
+	         final tracker tk = new tracker();
+	   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE)); 		
+	        
+	 		 //intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+	         Toast.makeText(getApplicationContext(), "Gps Iniciado.",
+	                 Toast.LENGTH_SHORT).show();      
+	         
+	        
+	         
+	         // Serviço de conexão.
+	        final AsxSocket socket = new AsxSocket(getApplicationContext());	 	 
+	 		
+    	 }
         return startId;
     }
 
