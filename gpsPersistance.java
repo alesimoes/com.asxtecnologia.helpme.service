@@ -3,6 +3,8 @@ package com.asxtecnologia.helpme.service;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import android.content.Context;
+
 
 
 /**
@@ -31,6 +33,9 @@ public class gpsPersistance {
 
     public static void SetLocation (FileOutputStream floutput,  Double latitude, Double longitude)
     {
+    	
+      
+        
         // Salva o login no arquivo.
         fileio fl = new fileio();
         fl.writeToFile(longitude+":"+longitude,floutput);

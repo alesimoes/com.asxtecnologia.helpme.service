@@ -22,10 +22,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class AsxWebSocketClient extends WebSocketClient {
 
- 
+	interface AsxSocketCallback{
+		void onMessage(String s);
+		void onClosed();
+		void onOpen();		
+	}
+	
   private FrameBuilder frameBuilder;
+  private AsxSocketCallback callback;
+
   private static final Map<String, String> draftMap = new HashMap<String, String>();
   static {
     draftMap.put("draft10", "org.java_websocket.drafts.Draft_10");
@@ -43,9 +53,10 @@ public class AsxWebSocketClient extends WebSocketClient {
     stateMap.put(READYSTATE.NOT_YET_CONNECTED, 3);
   }
 
-  public AsxWebSocketClient(URI serverURI) {
+  public AsxWebSocketClient(URI serverURI, AsxSocketCallback call) {
     super(serverURI, new Draft_17());
     this.frameBuilder = new FramedataImpl1();
+    this.callback = call;
     
     if (serverURI.getScheme().equals("wss")) {
       try {
@@ -62,18 +73,20 @@ public class AsxWebSocketClient extends WebSocketClient {
 
   @Override
   public void onOpen(ServerHandshake handshakedata) {
-    this.send("{\"MessageType\":\"Ping\"}");
+    this.send("{\"MessageType\":\"Ping\"}");  
+    this.callback.onOpen();
   }
 
   @Override
   public void onMessage(String message) {
    // sendResult(message, "message", PluginResult.Status.OK);
+	 this.callback.onMessage(message);
+	 
   }
   
   @Override
   public void onMessage(ByteBuffer bytes) {
-  
-	  JSONArray jsonArr = Utils.byteArrayToJSONArray(bytes.array());
+    JSONArray jsonArr = Utils.byteArrayToJSONArray(bytes.array());
       
   }
 
@@ -101,6 +114,7 @@ public class AsxWebSocketClient extends WebSocketClient {
   @Override
   public void onClose(int code, String reason, boolean remote) {
    // sendResult("", "close", PluginResult.Status.OK);
+	this.callback.onClosed();
   }
 
   @Override

@@ -79,6 +79,7 @@ public class tracker {
             //new geoLocationService().execute(Security.Key,Longitude.toString(),Latitude.toString());
             lastLatitude = Latitude;
             lastLongitude = Longitude;
+            AsxSocket.Socket.send( "{\"MessageType\":\"GPS\",\"Token\":\"bU82bXf/i0CBRS3V3bY28w==\",\"Latitude\":"+ Latitude +",\"Longitude\":"+Longitude+"}");
         }
     }
 }
