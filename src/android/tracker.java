@@ -79,8 +79,8 @@ public class tracker {
 
     private void AtualizaServer()
     {
-        if((lastLatitude - Latitude>0.01 || lastLatitude - Latitude<-0.01)
-                || (lastLongitude - Longitude>0.01 || lastLongitude - Longitude<-0.01))
+        if((lastLatitude - Latitude>0.0001 || lastLatitude - Latitude < -0.0001)
+                || (lastLongitude - Longitude>0.001 || lastLongitude - Longitude <-0.001))
         {
             //new geoLocationService().execute(Security.Key,Longitude.toString(),Latitude.toString());
             lastLatitude = Latitude;
