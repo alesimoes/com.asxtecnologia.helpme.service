@@ -21,6 +21,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -79,9 +80,10 @@ public class AsxWebSocketClient extends WebSocketClient {
   }
 
   @Override
-  public void onMessage(String message) {
+  public void onMessage(String message)  {
    // sendResult(message, "message", PluginResult.Status.OK);
    this.callback.onMessage(message);
+  
    
   }
   
