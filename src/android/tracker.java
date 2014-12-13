@@ -1,10 +1,13 @@
 package com.asxtecnologia.helpme.service;
 
+import java.nio.channels.NotYetConnectedException;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 /**
  * Created by alexandre.simoes on 06/01/14.
@@ -16,7 +19,7 @@ public class tracker {
     private static Double lastLongitude=9.927;
     public static Location myLocation;  
     private static Boolean paused=false;
-
+   
     public tracker()
     {
 
@@ -40,7 +43,9 @@ public class tracker {
             public void onProviderDisabled(String provider) {}
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,  5000L, 10F, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,  5000L, 10F, locationListener);
+     
+        
     }
 
     public static void Pause()
@@ -63,23 +68,36 @@ public class tracker {
             myLocation = location;
             Latitude = location.getLatitude();
             Longitude = location.getLongitude();
-            // Atualiza no arquivo texto os dados da localização.
+            // Atualiza no arquivo texto os dados da localizaÃ§Ã£o.
             //Maps.SetMyLocation(location);
         }
-        // Verifica se é para atualizar o servidor.
+        // Verifica se Ã© para atualizar o servidor.
+        //Token.SetGeo(, geo)
         AtualizaServer();
     }
 
 
     private void AtualizaServer()
     {
-        if((lastLatitude - Latitude>0.00000050 || lastLatitude - Latitude<-0.00000050)
-                &&(lastLongitude - Longitude>0.00000050 || lastLongitude - Longitude<-0.00000050))
+        if((lastLatitude - Latitude>0.00000050 && lastLatitude - Latitude<-0.00000050)
+                ||(lastLongitude - Longitude>0.00000050 && lastLongitude - Longitude<-0.00000050))
         {
             //new geoLocationService().execute(Security.Key,Longitude.toString(),Latitude.toString());
             lastLatitude = Latitude;
             lastLongitude = Longitude;
-            AsxSocket.Socket.send( "{\"MessageType\":\"GPS\",\"Token\":\"bU82bXf/i0CBRS3V3bY28w==\",\"Latitude\":"+ Latitude +",\"Longitude\":"+Longitude+"}");
-        }
+                try{
+                    try {
+                        if(AsxSocket.Socket.isOpen())
+                        {
+                            AsxSocket.Socket.send( "{\"MessageType\":\"GPS\",\"Token\":\""+Token.Token+"\",\"Latitude\":"+ Latitude +",\"Longitude\":"+Longitude+"}");
+                        }
+                    } catch (NotYetConnectedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }finally
+                {
+                }
+         }        
     }
 }

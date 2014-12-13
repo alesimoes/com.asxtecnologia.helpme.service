@@ -39,21 +39,19 @@ public class StartService extends Service{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	 // Se j· tivr efetuado login starta o processo.
+    	 // Se j√° tivr efetuado login starta o processo.
     	 if(Token.Token!="")
     	 {
-             // Inicia conex„o com o servidor.
+             // Inicia conex√£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
     	 
-	    	 // ServiÁo de rastreamento.
+	    	 // Servi√ßo de rastreamento.
 	         final tracker tk = new tracker();
 	   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE)); 		
-	        
-	 		      
-	         
-	         	 
 	 		
+             Toast.makeText(getApplicationContext(), "Iniciado.",
+                     Toast.LENGTH_LONG).show();
     	 }
         return startId;
     }

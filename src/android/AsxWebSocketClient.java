@@ -27,12 +27,13 @@ import android.widget.Toast;
 
 public class AsxWebSocketClient extends WebSocketClient {
 
-	interface AsxSocketCallback{
-		void onMessage(String s);
-		void onClosed();
-		void onOpen();		
-	}
-	
+  interface AsxSocketCallback{
+    void onMessage(String s);
+    void onClosed();
+    void onOpen();  
+    void onError(Exception ex);
+  }
+  
   private FrameBuilder frameBuilder;
   private AsxSocketCallback callback;
 
@@ -80,8 +81,8 @@ public class AsxWebSocketClient extends WebSocketClient {
   @Override
   public void onMessage(String message) {
    // sendResult(message, "message", PluginResult.Status.OK);
-	 this.callback.onMessage(message);
-	 
+   this.callback.onMessage(message);
+   
   }
   
   @Override
@@ -114,12 +115,13 @@ public class AsxWebSocketClient extends WebSocketClient {
   @Override
   public void onClose(int code, String reason, boolean remote) {
    // sendResult("", "close", PluginResult.Status.OK);
-	this.callback.onClosed();
+  this.callback.onClosed();
   }
 
   @Override
   public void onError(Exception ex) {
     //sendResult(ex.getMessage(), "error", PluginResult.Status.ERROR);
+    this.callback.onError(ex);
   }
 
   @Override
