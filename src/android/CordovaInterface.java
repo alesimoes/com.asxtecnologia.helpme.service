@@ -50,7 +50,7 @@ public class CordovaInterface extends CordovaPlugin {
 
 	    	Intent serviceIntent = new Intent();
 			serviceIntent.setAction("com.asxtecnologia.helpme.service.StartService");
-			startService(serviceIntent);	
+		    cordova.getActivity().startService(serviceIntent);
 	    }
 	    
 	    private void token(String message, CallbackContext callbackContext) {
