@@ -30,12 +30,27 @@ public class CordovaInterface extends CordovaPlugin {
 	           this.gps( callbackContext);
 	            return true;
 	        }
+
+	        if (action.equals("Start")) {
+	           this.start( callbackContext);
+	            return true;
+	        }
 	        return false;
 	    }
 
 	    private void gps( CallbackContext callbackContext) {
 	        String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	callbackContext.success(message);
+	    }
+
+	     private void start( CallbackContext callbackContext) {
+	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
+	    	//callbackContext.success(message);
+	    	// Inicia o serviço 
+
+	    	Intent serviceIntent = new Intent();
+			serviceIntent.setAction("com.asxtecnologia.helpme.service.StartService");
+			startService(serviceIntent);	
 	    }
 	    
 	    private void token(String message, CallbackContext callbackContext) {

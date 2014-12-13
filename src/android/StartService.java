@@ -42,19 +42,17 @@ public class StartService extends Service{
     	 // Se já tivr efetuado login starta o processo.
     	 if(Token.Token!="")
     	 {
+             // Inicia conexão com o servidor.
+            final AsxSocket socket = new AsxSocket(getApplicationContext());    
+
     	 
 	    	 // Serviço de rastreamento.
 	         final tracker tk = new tracker();
 	   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE)); 		
 	        
-	 		 //intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
-	         Toast.makeText(getApplicationContext(), "Gps Iniciado.",
-	                 Toast.LENGTH_SHORT).show();      
+	 		      
 	         
-	        
-	         
-	         // Serviço de conexão.
-	        final AsxSocket socket = new AsxSocket(getApplicationContext());	 	 
+	         	 
 	 		
     	 }
         return startId;
