@@ -39,6 +39,7 @@
     <source-file src="src/android/Token.java" target-dir="src/com/asxtecnologia/helpme/service"/>
         <source-file src="src/android/tracker.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/Utils.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/CordovaApp.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     
      <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
