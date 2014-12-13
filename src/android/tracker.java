@@ -13,10 +13,10 @@ import android.widget.Toast;
  * Created by alexandre.simoes on 06/01/14.
  */
 public class tracker {
-    public static Double Latitude=0;
-    public static Double Longitude=0;
-    private static Double lastLatitude=0;
-    private static Double lastLongitude=0;
+    public static Double Latitude=0.00;
+    public static Double Longitude=0.00;
+    private static Double lastLatitude=0.00;
+    private static Double lastLongitude=0.00;
     public static Location myLocation;  
     private static Boolean paused=false;
    
@@ -80,7 +80,7 @@ public class tracker {
     private void AtualizaServer()
     {
         if((lastLatitude - Latitude>0.0001 || lastLatitude - Latitude < -0.0001)
-                || (lastLongitude - Longitude>0.001 || lastLongitude - Longitude <-0.001))
+                || (lastLongitude - Longitude>0.0001 || lastLongitude - Longitude <-0.0001))
         {
             //new geoLocationService().execute(Security.Key,Longitude.toString(),Latitude.toString());
             lastLatitude = Latitude;
