@@ -10,8 +10,8 @@ window.helpme.token = function(token, callback) {
     }, "Helpme", "Token", [token]);
 };
 
-window.helpme.start = function(token, callback) {
+window.helpme.start = function(callback) {
     cordova.exec(callback, function(err) {
         callback('Nothing to echo.');
-    }, "Helpme", "Start", [token]);
+    }, "Helpme", "Start", []);
 };
