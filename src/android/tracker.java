@@ -13,10 +13,10 @@ import android.widget.Toast;
  * Created by alexandre.simoes on 06/01/14.
  */
 public class tracker {
-    public static Double Latitude=53.558;
-    public static Double Longitude=9.927;
-    private static Double lastLatitude=53.558;
-    private static Double lastLongitude=9.927;
+    public static Double Latitude=0;
+    public static Double Longitude=0;
+    private static Double lastLatitude=0;
+    private static Double lastLongitude=0;
     public static Location myLocation;  
     private static Boolean paused=false;
    
