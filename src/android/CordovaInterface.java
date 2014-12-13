@@ -51,8 +51,8 @@ public class CordovaInterface extends CordovaPlugin {
 	    	//callbackContext.success(message);
 	    	// Inicia o serviço 
 
-	    	Intent serviceIntent = new Intent();
-			serviceIntent.setAction("com.asxtecnologia.helpme.service.StartService.class");
+	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
+        
 		    cordova.getActivity().startService(serviceIntent);
 	    }
 	    
