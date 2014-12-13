@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="com.asxtecnologia.startup"
+        id="com.asxtecnologia.helpme.service"
         version="2.0.1">
 
   <name>Startup</name>
@@ -16,36 +16,43 @@
     <engine name="cordova" version=">=3.0.0"/>
   </engines>
 
-  <js-module src="www/Startup.js" name="Startup">
-    <clobbers target="window.plugins.startup" />
+  <js-module src="www/helpme.service.js" name="helpme.service">
+    <clobbers target="window.helpme.service" />
   </js-module>
 
   <!-- android -->
   <platform name="android">
 
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Startup">
+      <feature name="helpme.service">
         <param name="android-package" value="com.asxtecnologia.helpme.service" />
       </feature>
     </config-file>    
-    <source-file src="src/android/StartOnBoot.java" target-dir="src/com/asxtecnologia/startup"/>
-    <source-file src="src/android/StartUpActivity.java" target-dir="src/com/asxtecnologia/startup"/>
-    <source-file src="src/android/StartService.java" target-dir="src/com/asxtecnologia/startup"/>
+    <source-file src="src/android/StartOnBoot.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/StartService.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+
+    <source-file src="src/android/AsxSocket.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/AsxWebSocketClient.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/CordovaInterface.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+        <source-file src="src/android/fileio.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/InsecureX509TrustManager.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/Token.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+        <source-file src="src/android/tracker.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    <source-file src="src/android/Utils.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+    
      <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
             <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.RECORD_VIDEO" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-     <uses-permission android:name="android.permission.INTERNET"/>.
+            <uses-permission android:name="android.permission.SEND_SMS" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
+            <uses-permission android:name="android.permission.RECORD_VIDEO" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+             <uses-permission android:name="android.permission.INTERNET"/>
         </config-file>   
      <config-file target="AndroidManifest.xml" parent="/manifest/application">
-
             <receiver android:name="com.asxtecnologia.helpme.service.StartOnBoot">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED">
@@ -54,12 +61,9 @@
         </receiver>
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
        </service> 
-                <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.asxtecnologia.helpme..startup.StartUpActivity" android:theme="@android:style/Theme.Black.NoTitleBar">
-        </activity>
+                
         </config-file>
 
-
   </platform>
-
 
 </plugin>
