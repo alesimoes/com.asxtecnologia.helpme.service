@@ -63,7 +63,7 @@
                 
                    <action android:name="android.intent.action.PACKAGE_REPLACED" />
                    <data android:scheme="com.asxtecnologia.helpme.service.AlertActivity" />
- </intent-filter> 
+
             </intent-filter>
         </receiver>
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
