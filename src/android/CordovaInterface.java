@@ -70,13 +70,13 @@ public class CordovaInterface extends CordovaPlugin {
 
 	    
 	    /*
-	     * Inicia o serviço.
+	     * Inicia o serviÃ§o.
 	     * 
 	     **/
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviÃƒÂ§o 
+	    	// Inicia o serviÃƒÆ’Ã‚Â§o 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
@@ -127,7 +127,7 @@ public class CordovaInterface extends CordovaPlugin {
 	        boolean shortCutWasAlreadyAdded = sharedPreferences.getBoolean(PREF_KEY_SHORTCUT_ADDED, false);
 	        if (shortCutWasAlreadyAdded) return;
 
-	        Intent shortcutIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.AlertActivity);
+	        Intent shortcutIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.AlertActivity.class);
 	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

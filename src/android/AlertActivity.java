@@ -26,7 +26,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class CordovaApp extends CordovaActivity
+public class AlertActivity extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
