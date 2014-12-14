@@ -20,7 +20,7 @@ public void onReceive(Context context, Intent intent){
             if (countPowerOff >= 2)
             {
                 countPowerOff=0;
-                Toast.makeText(context, "Pedido de ajuda será enviado em 5 segundos.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Seu pedido de ajuda será enviado em 5 segundos.", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(context, com.asxtecnologia.helpme.service.AlertActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
