@@ -19,6 +19,9 @@
 
 package com.asxtecnologia.helpme.service;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import org.apache.cordova.*;
@@ -35,6 +38,24 @@ public class CordovaApp extends CordovaActivity
         
         //Intent serviceIntent = new Intent(this.getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         //startService(serviceIntent);
+        
+        //Tenta iniciaro o servico
+
+      Intent serviceIntent = new Intent(this.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
+      if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
+      {
+      this.getActivity().startService(serviceIntent);
+    }
     
+    }
+    
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+      ActivityManager manager = (ActivityManager) this.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+      return false;
     }
 }

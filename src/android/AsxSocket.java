@@ -14,6 +14,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
@@ -86,7 +87,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está precisando de sua ajuda. Entre no mapa e veja sua localização."))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " estÃ¡ precisando de sua ajuda. Entre no mapa e veja sua localizaÃ§Ã£o."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true).build();
@@ -109,8 +110,27 @@ public  class AsxSocket implements AsxSocketCallback {
 	@Override
 	public void onClosed() {
 		// TODO Auto-generated method stub
-		//		 Toast.makeText(AsxSocket.context,"Conexão fechada",
+		//		 Toast.makeText(AsxSocket.context,"ConexÃ£o fechada",
 		//	              Toast.LENGTH_LONG).show();		
+		
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+		    @Override
+		    public void run() {
+		        // Do something after 5s = 5000ms
+		    	 {
+				   	 //AsxSocket.context = context;
+					// AsxSocket.Socket = new AsxWebSocketClient(serverURI, AsxSocket);
+					 AsxSocket.Socket.connect();
+					 //this.Socket = this;
+				     if(AsxSocket.Socket.isConnecting())
+				     {
+				    	 AsxSocket.Socket.send("Envio de mensagem");
+				     }
+				 }
+		       
+		    }
+		}, 10000);
 		
 	}
 	
