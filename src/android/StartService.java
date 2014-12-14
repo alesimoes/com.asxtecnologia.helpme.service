@@ -59,7 +59,7 @@ public class StartService extends Service{
              AsxReceiver rc = new AsxReceiver();
              registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));           
          }
-        return start;
+        return startId;
     }
 
     @Override

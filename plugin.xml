@@ -30,7 +30,6 @@
     </config-file>    
     <source-file src="src/android/StartOnBoot.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/StartService.java" target-dir="src/com/asxtecnologia/helpme/service"/>
-
     <source-file src="src/android/AsxSocket.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/AsxWebSocketClient.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/CordovaInterface.java" target-dir="src/com/asxtecnologia/helpme/service"/>
@@ -58,20 +57,9 @@
      <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.asxtecnologia.helpme.service.StartOnBoot">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED">
-                </action>
-                
-                   <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                   <data android:scheme="com.asxtecnologia.helpme.service.AlertActivity" />
-
+                <action android:name="android.intent.action.BOOT_COMPLETED" />                  
             </intent-filter>
-        </receiver>
-          <receiver android:name="com.asxtecnologia.helpme.service.AsxReceiver">
-          <intent-filter >
-              <action android:name="android.intent.action.SCREEN_OFF"/>
-              <action android:name="android.intent.action.SCREEN_ON"/>            
-          </intent-filter>
-      </receiver>
+        </receiver>         
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
        </service> 
         <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.asxtecnologia.helpme.service.CordovaApp" android:theme="@android:style/Theme.Black.NoTitleBar">
