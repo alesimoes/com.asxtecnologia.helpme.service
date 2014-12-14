@@ -70,18 +70,17 @@ public class CordovaInterface extends CordovaPlugin {
 
 	    
 	    /*
-	     * Inicia o serviÃƒÆ’Ã‚Â§o.
+	     * Inicia o serviÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o.
 	     * 
 	     **/
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o 
-
+	    	
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
         	{
-		    cordova.getActivity().startService(serviceIntent);
+        		cordova.getActivity().startService(serviceIntent);
 			}
 	    }
 
@@ -108,9 +107,10 @@ public class CordovaInterface extends CordovaPlugin {
 	    private boolean isMyServiceRunning(Class<?> serviceClass) {
 	    ActivityManager manager = (ActivityManager) this.cordova.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
 		    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-		        if (serviceClass.getName().equals(service.service.getClassName())) {
-		            return true;
-		        }
+		    	 if (serviceClass.getName().equals(service.service.getClassName())) {
+		            	manager.killBackgroundProcesses(service.clientPackage);
+		                return false;
+		            }
 		    }
 	    return false;
 		}

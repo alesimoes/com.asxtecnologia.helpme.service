@@ -41,11 +41,12 @@ public class CordovaApp extends CordovaActivity
         
         //Tenta iniciaro o servico
 
-      Intent serviceIntent = new Intent(this.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
-      if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
-      {
-      this.getActivity().startService(serviceIntent);
-    }
+      //Intent serviceIntent = new Intent(this.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
+      //if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
+     // {
+      //  this.getActivity().startService(serviceIntent);
+     // }
+      
     
     }
     
@@ -53,9 +54,11 @@ public class CordovaApp extends CordovaActivity
       ActivityManager manager = (ActivityManager) this.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
+              manager.killBackgroundProcesses(service.clientPackage);
+                return false;
             }
         }
       return false;
     }
+   
 }
