@@ -117,7 +117,7 @@ public class AsxWebSocketClient extends WebSocketClient {
   @Override
   public void onClose(int code, String reason, boolean remote) {
    // sendResult("", "close", PluginResult.Status.OK);
-  this.callback.onClosed();
+    this.callback.onClosed();
   }
 
   @Override

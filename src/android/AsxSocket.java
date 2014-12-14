@@ -27,7 +27,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	public static Context context;
 	public static AsxWebSocketClient Socket; 
 	public static URI serverURI;
-	public static Boolean isConnected = false;
+	public static Boolean isConnected = true;
 	public AsxSocket( Context context) 
 	{
 		  serverURI = null;
@@ -41,7 +41,7 @@ public  class AsxSocket implements AsxSocketCallback {
 		//super(serverURI);
 		 if(this.Socket==null)
 		 {
-		   	AsxSocket.context = context;
+		   	 AsxSocket.context = context;
 			 this.Socket = new AsxWebSocketClient(serverURI, this);
 			 this.Socket.connect();
 			 //this.Socket = this;
@@ -52,6 +52,22 @@ public  class AsxSocket implements AsxSocketCallback {
 		 }
 	     
 		// TODO Auto-generated constructor stub
+	}
+	
+	public static void Reconnect(){
+		 if(AsxSocket.isConnected!=false)
+		 {
+			 AsxSocket.Socket.close();
+		 }
+		
+		 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
+		 AsxSocket.Socket.connect();
+		 //this.Socket = this;
+	     if(AsxSocket.Socket.isConnecting())
+	     {
+	    	 AsxSocket.Socket.send("Envio de mensagem");
+	     }
+		
 	}
 	
 	@Override
@@ -89,7 +105,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " estÃ¡ precisando de sua ajuda. Entre no mapa e veja sua localizalizaÃ§Ã£o."))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está precisando de sua ajuda."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true).build();
