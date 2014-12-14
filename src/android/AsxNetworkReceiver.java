@@ -19,18 +19,8 @@ public void onReceive(Context context, Intent intent){
     
     if(AsxSocket.isConnected==false)
     {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do something after 5s = 5000ms
-                 {
-                        AsxSocket.Socket = null;
-                        AsxSocket s = new AsxSocket(AsxSocket.context);
-                 }
-               
-            }
-        }, 10000);
+         AsxSocket.Socket = null;
+          AsxSocket s = new AsxSocket(AsxSocket.context);
         
     
     }
