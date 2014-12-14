@@ -50,8 +50,8 @@ public class StartService extends Service{
 	         final tracker tk = new tracker();
 	   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE)); 		
 	 		
-             Toast.makeText(getApplicationContext(), "Iniciado.",
-                     Toast.LENGTH_LONG).show();
+             //Toast.makeText(getApplicationContext(), "Iniciado.",
+             //        Toast.LENGTH_LONG).show();
     	 }
         return startId;
     }
