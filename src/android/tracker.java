@@ -100,7 +100,7 @@ public class tracker {
             public void onProviderDisabled(String provider) {}
         };
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,  5000L, 10F, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 50, locationListener);
      
         
     }
