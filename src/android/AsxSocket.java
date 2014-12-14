@@ -80,7 +80,7 @@ public  class AsxSocket implements AsxSocketCallback {
 			 	case 2:
 					 break;
 			 	case 3:
-			 		Intent intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.CordovaApp.class);
+			 		Intent intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.service.CordovaApp.class);
 			 		PendingIntent pIntent = PendingIntent.getActivity(AsxSocket.context, 0, intent, 0);
 					// build notification
 					// the addAction re-use the same intent to keep the example short
