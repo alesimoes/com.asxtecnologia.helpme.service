@@ -31,10 +31,10 @@ public class CordovaApp extends CordovaActivity
         super.onCreate(savedInstanceState);
         super.init();
         // Set by <content src="index.html" /> in config.xml
-        loadUrl("main.html#location");
+        loadUrl(launchUrl.replace("index.html", "main.html#location"));
         
         //Intent serviceIntent = new Intent(this.getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         //startService(serviceIntent);
-	  
+    
     }
 }
