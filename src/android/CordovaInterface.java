@@ -70,13 +70,13 @@ public class CordovaInterface extends CordovaPlugin {
 
 	    
 	    /*
-	     * Inicia o serviÃ§o.
+	     * Inicia o serviÃƒÂ§o.
 	     * 
 	     **/
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviÃƒÆ’Ã‚Â§o 
+	    	// Inicia o serviÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
@@ -134,7 +134,7 @@ public class CordovaInterface extends CordovaPlugin {
 	        Intent addIntent = new Intent();
 	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
 	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "HelpMe Now");
-	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(cordova.getActivity().getApplicationContext(), R.drawable.ic_launcher));
+	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(cordova.getActivity().getApplicationContext(), R.drawable.icon));
 	        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 	        cordova.getActivity().getApplicationContext().sendBroadcast(addIntent);
 
