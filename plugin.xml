@@ -62,6 +62,8 @@
         </receiver>
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
        </service> 
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.asxtecnologia.helpme.service.CordovaApp" android:theme="@android:style/Theme.Black.NoTitleBar">
+        </activity>
 
         </config-file>
 
