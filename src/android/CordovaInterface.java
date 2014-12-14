@@ -52,9 +52,22 @@ public class CordovaInterface extends CordovaPlugin {
 	    	// Inicia o serviço 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
-        
+        	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
+        	{
 		    cordova.getActivity().startService(serviceIntent);
+			}
 	    }
+
+
+	    private boolean isMyServiceRunning(Class<?> serviceClass) {
+    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        if (serviceClass.getName().equals(service.service.getClassName())) {
+            return true;
+        }
+    }
+    return false;
+	}
 	    
 	    private void token(String message, CallbackContext callbackContext) {
 	        if (message != null && message.length() > 0) {
