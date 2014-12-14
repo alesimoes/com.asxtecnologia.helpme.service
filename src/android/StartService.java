@@ -41,14 +41,14 @@ public class StartService extends Service{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         // Se jÃ¡ tivr efetuado login starta o processo.
+         // Se jÃƒÂ¡ tivr efetuado login starta o processo.
          if(Token.Token!="")
          {
-             // Inicia conexÃ£o com o servidor.
+             // Inicia conexÃƒÂ£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
          
-             // ServiÃ§o de rastreamento.
+             // ServiÃƒÂ§o de rastreamento.
              final tracker tk = new tracker();
              tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
             
@@ -57,9 +57,9 @@ public class StartService extends Service{
              
              // Inicia o broadcast de pedido de ajuda instantaneo.
              AsxReceiver rc = new AsxReceiver();
-            registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));           
          }
-        return startId;
+        return start;
     }
 
     @Override
