@@ -85,8 +85,8 @@ public  class AsxSocket implements AsxSocketCallback {
 					// build notification
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
-					        .setContentTitle(name+ " está precisando de sua ajuda. ")
-					        .setContentText("Entre no mapa e veja sua localização.")
+					        .setContentTitle("HelpMe")
+					        .setContentText(name+ " está precisando de sua ajuda. Entre no mapa e veja sua localização.")
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true).build();
