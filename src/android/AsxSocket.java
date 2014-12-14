@@ -27,6 +27,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	public static Context context;
 	public static AsxWebSocketClient Socket; 
 	public static URI serverURI;
+	public static Boolean isConnected = false;
 	public AsxSocket( Context context) 
 	{
 		  serverURI = null;
@@ -57,6 +58,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	public void onOpen() {
 		// Envia o pedido de registro
 		AsxSocket.Socket.send( "{\"MessageType\":\"Register\",\"Token\":\""+Token.Token+"\"}");
+		isConnected=true;
 	}
 	
 	@Override
@@ -87,7 +89,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está precisando de sua ajuda. Entre no mapa e veja sua localizalização."))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " estÃ¡ precisando de sua ajuda. Entre no mapa e veja sua localizalizaÃ§Ã£o."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true).build();
@@ -109,28 +111,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	
 	@Override
 	public void onClosed() {
-		// TODO Auto-generated method stub
-		//		 Toast.makeText(AsxSocket.context,"ConexÃ£o fechada",
-		//	              Toast.LENGTH_LONG).show();		
-		
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-		    @Override
-		    public void run() {
-		        // Do something after 5s = 5000ms
-		    	 {
-				   	 //AsxSocket.context = context;
-					// AsxSocket.Socket = new AsxWebSocketClient(serverURI, AsxSocket);
-					 AsxSocket.Socket.connect();
-					 //this.Socket = this;
-				     if(AsxSocket.Socket.isConnecting())
-				     {
-				    	 AsxSocket.Socket.send("Envio de mensagem");
-				     }
-				 }
-		       
-		    }
-		}, 10000);
+		isConnected = false;
 		
 	}
 	
