@@ -14,7 +14,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
@@ -99,6 +103,9 @@ public  class AsxSocket implements AsxSocketCallback {
 			 	case 2:
 					 break;
 			 	case 3:
+			 		//Define sound URI
+			 		Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			 		
 			 		Intent intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.service.CordovaApp.class);
 			 		PendingIntent pIntent = PendingIntent.getActivity(AsxSocket.context, 0, intent, 0);
 					// build notification
@@ -108,13 +115,33 @@ public  class AsxSocket implements AsxSocketCallback {
 					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está precisando de sua ajuda."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
-					        .setAutoCancel(true).build();
+					        .setAutoCancel(true)
+					        .setSound(soundUri).build();
 					    
 					  
 					NotificationManager notificationManager = 
 					  (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 					
 					notificationManager.notify(0, n); 
+					
+					 Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				     vibrator.vibrate(1000);
+				     
+				     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+				     Ringtone r = RingtoneManager.getRingtone(context, notification);
+				     r.play();
+				     
+				     vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				     vibrator.vibrate(1000);
+				     
+				     notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+				     r = RingtoneManager.getRingtone(context, notification);
+				     r.play();
+				     
+				     vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				     vibrator.vibrate(1500);
+				     
+				     
 
 					 break;
 			 }
