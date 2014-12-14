@@ -16,6 +16,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
 import android.content.Intent;
 
 	/**
@@ -49,7 +52,7 @@ public class CordovaInterface extends CordovaPlugin {
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviço 
+	    	// Inicia o serviÃ§o 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
@@ -60,14 +63,14 @@ public class CordovaInterface extends CordovaPlugin {
 
 
 	    private boolean isMyServiceRunning(Class<?> serviceClass) {
-    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-        if (serviceClass.getName().equals(service.service.getClassName())) {
-            return true;
-        }
-    }
-    return false;
-	}
+	    ActivityManager manager = (ActivityManager) this.cordova.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+		    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+		        if (serviceClass.getName().equals(service.service.getClassName())) {
+		            return true;
+		        }
+		    }
+	    return false;
+		}
 	    
 	    private void token(String message, CallbackContext callbackContext) {
 	        if (message != null && message.length() > 0) {
