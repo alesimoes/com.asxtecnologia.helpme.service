@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -59,13 +60,21 @@ public class StartService extends Service{
              AsxReceiver rc = new AsxReceiver();
              registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));           
          }
-        return startId;
+        return start;
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
        
+    }
+    
+    @SuppressLint("NewApi")
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        // TODO Auto-generated method stub
+        super.onTaskRemoved(rootIntent);
+        
     }
     @Override
     public IBinder onBind(Intent arg0) {
