@@ -80,20 +80,20 @@ public  class AsxSocket implements AsxSocketCallback {
 			 	case 2:
 					 break;
 			 	case 3:
-			 		Intent intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.service.CordovaApp.class);
-			 		PendingIntent pIntent = PendingIntent.getActivity(this.context, 0, intent, 0);
+			 		Intent intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.CordovaApp.class);
+			 		PendingIntent pIntent = PendingIntent.getActivity(AsxSocket.context, 0, intent, 0);
 					// build notification
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setContentText(name+ " est· precisando de sua ajuda. Entre no mapa e veja sua localizaÁ„o.")
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est√° precisando de sua ajuda. Entre no mapa e veja sua localiza√ß√£o."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true).build();
 					    
 					  
 					NotificationManager notificationManager = 
-					  (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+					  (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 					
 					notificationManager.notify(0, n); 
 
@@ -109,7 +109,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	@Override
 	public void onClosed() {
 		// TODO Auto-generated method stub
-		//		 Toast.makeText(AsxSocket.context,"Conex„o fechada",
+		//		 Toast.makeText(AsxSocket.context,"Conex√£o fechada",
 		//	              Toast.LENGTH_LONG).show();		
 		
 	}
