@@ -70,13 +70,13 @@ public class CordovaInterface extends CordovaPlugin {
 
 	    
 	    /*
-	     * Inicia o serviÃƒÂ§o.
+	     * Inicia o serviÃƒÆ’Ã‚Â§o.
 	     * 
 	     **/
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o 
+	    	// Inicia o serviÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
