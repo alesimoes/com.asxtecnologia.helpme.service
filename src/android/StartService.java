@@ -13,12 +13,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
 public class StartService extends Service{  
       
+    
       /** Called when the activity is first created. */
     @Override
     public void onCreate() {
@@ -42,14 +44,14 @@ public class StartService extends Service{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         // Se jÃƒÂ¡ tivr efetuado login starta o processo.
+         // Se jÃƒÆ’Ã‚Â¡ tivr efetuado login starta o processo.
          if(Token.Token!="")
          {
-             // Inicia conexÃƒÂ£o com o servidor.
+             // Inicia conexÃƒÆ’Ã‚Â£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
          
-             // ServiÃƒÂ§o de rastreamento.
+             // ServiÃƒÆ’Ã‚Â§o de rastreamento.
              final tracker tk = new tracker();
              tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
             
@@ -58,7 +60,12 @@ public class StartService extends Service{
              
              // Inicia o broadcast de pedido de ajuda instantaneo.
              AsxReceiver rc = new AsxReceiver();
-             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));           
+             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));    
+             
+             IntentFilter intentFilter = new IntentFilter();
+             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+             AsxNetworkReceiver net =  new AsxNetworkReceiver();
+             registerReceiver(net,intentFilter);
          }
         return start;
     }
