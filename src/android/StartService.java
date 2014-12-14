@@ -10,6 +10,7 @@ import java.util.Map;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,35 +25,40 @@ public class StartService extends Service{
         //Log.d("TAG", "Service created.");
        // Toast.makeText(getApplicationContext(), "Service has ben created.",
        //         Toast.LENGTH_LONG).show();
+        
       
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
        
-    	 int start = super.onStartCommand(intent, flags, startId);
+         int start = super.onStartCommand(intent, flags, startId);
          
-    	 // tenta abrir o arquivo com o token.
-    	 try {
-			Token.GetToken(openFileInput(Token.File));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	 // Se já tivr efetuado login starta o processo.
-    	 if(Token.Token!="")
-    	 {
-             // Inicia conexão com o servidor.
+         // tenta abrir o arquivo com o token.
+         try {
+            Token.GetToken(openFileInput(Token.File));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+         // Se jÃ¡ tivr efetuado login starta o processo.
+         if(Token.Token!="")
+         {
+             // Inicia conexÃ£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
-    	 
-	    	 // Serviço de rastreamento.
-	         final tracker tk = new tracker();
-	   		 tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE)); 		
-	 		
+         
+             // ServiÃ§o de rastreamento.
+             final tracker tk = new tracker();
+             tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
+            
              //Toast.makeText(getApplicationContext(), "Iniciado.",
              //        Toast.LENGTH_LONG).show();
-    	 }
+             
+             // Inicia o broadcast de pedido de ajuda instantaneo.
+             AsxReceiver rc = new AsxReceiver();
+            registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+         }
         return startId;
     }
 
