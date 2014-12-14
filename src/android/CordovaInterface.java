@@ -127,13 +127,13 @@ public class CordovaInterface extends CordovaPlugin {
 	        boolean shortCutWasAlreadyAdded = sharedPreferences.getBoolean(PREF_KEY_SHORTCUT_ADDED, false);
 	        if (shortCutWasAlreadyAdded) return;
 
-	        Intent shortcutIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.AlertActivity.class);
+	        Intent shortcutIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.CordovaApp.class);
 	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 	        Intent addIntent = new Intent();
 	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "HelpMe Now");
+	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "HelpMe");
 	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(cordova.getActivity().getApplicationContext(), R.drawable.icon));
 	        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 	        cordova.getActivity().getApplicationContext().sendBroadcast(addIntent);
