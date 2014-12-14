@@ -15,3 +15,9 @@ window.helpme.start = function(callback) {
         callback('Nothing to echo.');
     }, "Helpme", "Start", []);
 };
+
+window.helpme.close = function(callback) {
+    cordova.exec(callback, function(err) {
+        callback('Nothing to echo.');
+    }, "Helpme", "Close", []);
+};

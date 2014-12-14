@@ -15,11 +15,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.asxtecnologia.helpme.R;
+
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 	/**
 	 * This class echoes a string called from JavaScript.
@@ -30,6 +33,7 @@ public class CordovaInterface extends CordovaPlugin {
 	        if (action.equals("Token")) {
 	            String message = args.getString(0);
 	            this.token(message, callbackContext);
+	           
 	            return true;
 	        }
 	        if (action.equals("GPS")) {
@@ -39,20 +43,40 @@ public class CordovaInterface extends CordovaPlugin {
 
 	        if (action.equals("Start")) {
 	           this.start( callbackContext);
+	           createShortcutIcon();
 	            return true;
 	        }
+	        
+	        if (action.equals("Close")) {
+		           this.close( callbackContext);
+		            return true;
+		        }
 	        return false;
 	    }
 
+	    
+	    /*
+	     * Obtem as coordenadas do GPS.*/
 	    private void gps( CallbackContext callbackContext) {
 	        String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	callbackContext.success(message);
 	    }
 
+	    /*
+	     * Obtem as coordenadas do GPS.*/
+	    private void close( CallbackContext callbackContext) {
+	       cordova.getActivity().finish();
+	    }
+
+	    
+	    /*
+	     * Inicia o serviço.
+	     * 
+	     **/
 	     private void start( CallbackContext callbackContext) {
 	        //String message = "{\"Latitude\":"+tracker.Latitude+",\"Longitude\":"+tracker.Longitude+"}";
 	    	//callbackContext.success(message);
-	    	// Inicia o serviÃ§o 
+	    	// Inicia o serviÃƒÂ§o 
 
 	    	Intent serviceIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.StartService.class);
         	if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
@@ -61,17 +85,9 @@ public class CordovaInterface extends CordovaPlugin {
 			}
 	    }
 
-
-	    private boolean isMyServiceRunning(Class<?> serviceClass) {
-	    ActivityManager manager = (ActivityManager) this.cordova.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-		    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-		        if (serviceClass.getName().equals(service.service.getClassName())) {
-		            return true;
-		        }
-		    }
-	    return false;
-		}
-	    
+	     /*
+	      * Atualiza o token no arquivo de tokens.
+	      * */
 	    private void token(String message, CallbackContext callbackContext) {
 	        if (message != null && message.length() > 0) {
 	        	// Salva o token no arquivo de tokens.
@@ -87,5 +103,46 @@ public class CordovaInterface extends CordovaPlugin {
 	           // callbackContext.error("Expected one non-empty string argument.");
 	        }
 	    }
+	    
+
+	    private boolean isMyServiceRunning(Class<?> serviceClass) {
+	    ActivityManager manager = (ActivityManager) this.cordova.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+		    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+		        if (serviceClass.getName().equals(service.service.getClassName())) {
+		            return true;
+		        }
+		    }
+	    return false;
+		}
+	    
+	    final static public String PREFS_NAME = "PREFS_NAME";
+	    final static private String PREF_KEY_SHORTCUT_ADDED = "PREF_KEY_SHORTCUT_ADDED";
+
+
+	    // Creates shortcut on Android widget screen
+	    private void createShortcutIcon(){
+
+	        // Checking if ShortCut was already added
+	        SharedPreferences sharedPreferences = cordova.getActivity().getPreferences(cordova.getActivity().MODE_PRIVATE);
+	        boolean shortCutWasAlreadyAdded = sharedPreferences.getBoolean(PREF_KEY_SHORTCUT_ADDED, false);
+	        if (shortCutWasAlreadyAdded) return;
+
+	        Intent shortcutIntent = new Intent(cordova.getActivity().getApplicationContext(), com.asxtecnologia.helpme.service.AlertActivity);
+	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+	        Intent addIntent = new Intent();
+	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "HelpMe Now");
+	        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(cordova.getActivity().getApplicationContext(), R.drawable.ic_launcher));
+	        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+	        cordova.getActivity().getApplicationContext().sendBroadcast(addIntent);
+
+	        // Remembering that ShortCut was already added
+	        SharedPreferences.Editor editor = sharedPreferences.edit();
+	        editor.putBoolean(PREF_KEY_SHORTCUT_ADDED, true);
+	        editor.commit();
+	    }
+
 	}
 

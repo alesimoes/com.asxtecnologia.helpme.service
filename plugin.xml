@@ -40,7 +40,7 @@
         <source-file src="src/android/tracker.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/Utils.java" target-dir="src/com/asxtecnologia/helpme/service"/>
     <source-file src="src/android/CordovaApp.java" target-dir="src/com/asxtecnologia/helpme/service"/>
-    
+     <source-file src="src/android/AlertActivity.java" target-dir="src/com/asxtecnologia/helpme/service"/>
      <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
             <uses-permission android:name="android.permission.VIBRATE" />
@@ -51,7 +51,8 @@
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.RECORD_VIDEO" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-             <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
         </config-file>   
      <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.asxtecnologia.helpme.service.StartOnBoot">
@@ -63,8 +64,9 @@
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
        </service> 
         <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.asxtecnologia.helpme.service.CordovaApp" android:theme="@android:style/Theme.Black.NoTitleBar">
+        </activity
+           <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:launchMode="singleTop" android:name="com.asxtecnologia.helpme.service.AlertActivity" android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
-
         </config-file>
 
   </platform>
