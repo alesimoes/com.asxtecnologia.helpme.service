@@ -109,7 +109,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est· bem. O pedido de ajuda foi desativado."))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est√° bem. O pedido de ajuda foi desativado."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true)
@@ -131,7 +131,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est· precisando de sua ajuda. "))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est√° precisando de sua ajuda. "))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true)
