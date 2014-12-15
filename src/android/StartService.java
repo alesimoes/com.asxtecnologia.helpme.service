@@ -60,7 +60,7 @@ public class StartService extends Service{
              
              // Inicia o broadcast de pedido de ajuda instantaneo.
              AsxReceiver rc = new AsxReceiver();
-             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_OFF));    
+             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_ON));    
              
              IntentFilter intentFilter = new IntentFilter();
              intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);

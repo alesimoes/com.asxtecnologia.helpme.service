@@ -26,7 +26,7 @@ public class tracker {
 
     }
 
-    private static final int TWO_MINUTES = 1000 * 60 * 2;
+    private static final int TWO_MINUTES = 1000 * 60 * 5;
 
     /** Determines whether one Location reading is better than the current Location fix
       * @param location  The new Location that you want to evaluate
@@ -100,7 +100,7 @@ public class tracker {
             public void onProviderDisabled(String provider) {}
         };
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 50, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000*5, 50, locationListener);
      
         
     }
@@ -153,6 +153,12 @@ public class tracker {
                         if(AsxSocket.Socket.isOpen())
                         {
                             AsxSocket.Socket.send( "{\"MessageType\":\"GPS\",\"Token\":\""+Token.Token+"\",\"Latitude\":"+ Latitude +",\"Longitude\":"+Longitude+"}");
+                        }
+                        else{
+                        	if(AsxSocket.Socket!=null)
+                        	{
+                        		AsxSocket.Reconnect();
+                        	}                        			
                         }
                     } catch (NotYetConnectedException e) {
                         // TODO Auto-generated catch block

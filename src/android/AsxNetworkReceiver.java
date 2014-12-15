@@ -1,5 +1,7 @@
 package com.asxtecnologia.helpme.service;
 
+import java.util.Random;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,23 +19,39 @@ public AsxNetworkReceiver (){
 
 @Override
 public void onReceive(Context context, Intent intent){
-        // Inicia conexÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o com o servidor.
-    
-    if(AsxSocket.isConnected==false)
-    {
-        ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-         
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                              activeNetwork.isConnectedOrConnecting();
-        if(isConnected && AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
-        {
-         AsxSocket.Socket = null;
-         AsxSocket s = new AsxSocket(AsxSocket.context);
-        }
+       
+	ConnectivityManager cm =
+               (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         
-    
+       NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+       boolean isConnected = activeNetwork != null &&
+                             activeNetwork.isConnectedOrConnecting();
+    if(isConnected)   
+    {
+    	tracker.Resume();
+    	
+
+    	Random r = new Random();
+    	int time = r.nextInt(5000) + 1000;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
+                 {
+                    AsxSocket.Reconnect();
+                 }
+               
+            }
+        }, time);
+        
+    	
     }
+    else
+    {
+    	tracker.Pause();
+    }
+    
+    
  }
 }

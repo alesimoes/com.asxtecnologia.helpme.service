@@ -15,7 +15,8 @@ public AsxReceiver (){
 
 @Override
 public void onReceive(Context context, Intent intent){
-        if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){    
+        //if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
+        {    
             //Log.e("In on receive", "In Method:  ACTION_SCREEN_OFF");
             if (countPowerOff >= 2)
             {
@@ -37,7 +38,7 @@ public void onReceive(Context context, Intent intent){
                      }
                    
                 }
-            }, 10000);
+            }, 15000);
         }
         
  }

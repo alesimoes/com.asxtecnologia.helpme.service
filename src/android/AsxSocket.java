@@ -43,35 +43,34 @@ public  class AsxSocket implements AsxSocketCallback {
 				}
 			
 		//super(serverURI);
-		 if(this.Socket==null)
+		 if(AsxSocket.Socket==null)
 		 {
 		   	 AsxSocket.context = context;
-			 this.Socket = new AsxWebSocketClient(serverURI, this);
-			 this.Socket.connect();
+			 AsxSocket.Socket = new AsxWebSocketClient(serverURI, this);
+			 AsxSocket.Socket.connect();
 			 //this.Socket = this;
-		     if(this.Socket.isConnecting())
+		     if(AsxSocket.Socket.isConnecting())
 		     {
-		    	 this.Socket.send("Envio de mensagem");
+		    	 AsxSocket.Socket.send("Envio de mensagem");
 		     }
 		 }
 	     
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static void Reconnect(){
-		 if(AsxSocket.isConnected!=false)
-		 {
-			 AsxSocket.Socket.close();
-		 }
+	public static void Reconnect()
+	{		
 		
-		 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
-		 AsxSocket.Socket.connect();
-		 //this.Socket = this;
-	     if(AsxSocket.Socket.isConnecting())
-	     {
-	    	 AsxSocket.Socket.send("Envio de mensagem");
-	     }
-		
+    	if(AsxSocket.isConnected==false)
+ 	    {   if(AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
+ 	        {
+ 	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
+ 	    		 AsxSocket.Socket.connect();
+ 	    		 //this.Socket = this;
+ 	    	   
+ 	        }
+ 	    }
+          
 	}
 	
 	@Override
@@ -101,8 +100,6 @@ public  class AsxSocket implements AsxSocketCallback {
 			 	case 1:
 				 break;
 			 	case 2:
-					 break;
-			 	case 3:
 			 		//Define sound URI
 			 		Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 			 		
@@ -112,7 +109,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est√° precisando de sua ajuda. "))
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est· bem. O pedido de ajuda foi desativado."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true)
@@ -120,6 +117,28 @@ public  class AsxSocket implements AsxSocketCallback {
 					    
 					  
 					NotificationManager notificationManager = 
+					  (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+					
+					notificationManager.notify(0, n); 
+					 break;
+			 	case 3:
+			 		//Define sound URI
+			 		soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			 		
+			 		intent = new Intent(AsxSocket.context, com.asxtecnologia.helpme.service.CordovaApp.class);
+			 		pIntent = PendingIntent.getActivity(AsxSocket.context, 0, intent, 0);
+					// build notification
+					// the addAction re-use the same intent to keep the example short
+					n  = new Notification.Builder(AsxSocket.context)
+					        .setContentTitle("HelpMe")
+					        .setStyle(new Notification.BigTextStyle().bigText(name+ " est· precisando de sua ajuda. "))
+					        .setSmallIcon(R.drawable.icon)
+					        .setContentIntent(pIntent)
+					        .setAutoCancel(true)
+					        .setSound(soundUri).build();
+					    
+					  
+					notificationManager = 
 					  (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 					
 					notificationManager.notify(0, n); 
@@ -155,7 +174,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	@Override
 	public void onClosed() {
 		isConnected = false;
-		
+		AsxSocket.Reconnect();	
 	}
 	
 	@Override
