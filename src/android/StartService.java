@@ -66,6 +66,22 @@ public class StartService extends Service{
              intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
              AsxNetworkReceiver net =  new AsxNetworkReceiver();
              registerReceiver(net,intentFilter);
+
+             // Runable ping.
+             handler = new Handler();
+
+            final Runnable r = new Runnable() {
+                public void run() {
+                    try{
+                    AsxSocket.Socket.send("{\"MessageType\":\"Ping\"}");  
+                }catch(Exception e)
+                {
+                    // null
+                }
+                    handler.postDelayed(this, 900000);
+                }
+            };
+            handler.postDelayed(r, 900000);
          }
         return start;
     }
