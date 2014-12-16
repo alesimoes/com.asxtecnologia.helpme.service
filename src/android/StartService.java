@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,14 +46,14 @@ public class StartService extends Service{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         // Se jÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ tivr efetuado login starta o processo.
+         // Se jÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ tivr efetuado login starta o processo.
          if(Token.Token!="")
          {
-             // Inicia conexÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o com o servidor.
+             // Inicia conexÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
          
-             // ServiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o de rastreamento.
+             // ServiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o de rastreamento.
              final tracker tk = new tracker();
              tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
             
@@ -69,20 +70,23 @@ public class StartService extends Service{
              registerReceiver(net,intentFilter);
 
              // Runable ping.
-              final Handler handler = new Handler();
+             final Handler handler = new Handler();
 
-            final Runnable r = new Runnable() {
-                public void run() {
-                    try{
-                    AsxSocket.Socket.send("{\"MessageType\":\"Ping\"}");  
-                }catch(Exception e)
-                {
-                    // null
-                }
-                    handler.postDelayed(this, 300000);
-                }
-            };
-            handler.postDelayed(r, 300000);
+             final Runnable r = new Runnable() {
+                 public void run() {
+                     try{
+                     AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
+                      
+                 }
+                     catch(Exception e)
+                 {
+                     AsxSocket.Reconnect();
+                 }
+                     handler.postDelayed(this, 60000);
+                     
+                 }
+             };
+             handler.postDelayed(r, 60000);
          }
         return start;
     }

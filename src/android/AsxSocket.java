@@ -2,6 +2,7 @@ package com.asxtecnologia.helpme.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.text.format.Time;
 import android.widget.SlidingDrawer;
 import android.widget.Toast;
 
@@ -32,8 +34,9 @@ public  class AsxSocket implements AsxSocketCallback {
 	public static AsxWebSocketClient Socket; 
 	public static URI serverURI;
 	public static Boolean isConnected = true;
+	public static String Id="";
 	public AsxSocket( Context context) 
-	{
+	{		
 		  serverURI = null;
 			try {
 				serverURI = new URI("ws://helpmeapp.azurewebsites.net/Connection");
@@ -54,6 +57,8 @@ public  class AsxSocket implements AsxSocketCallback {
 		    	 AsxSocket.Socket.send("Envio de mensagem");
 		     }
 		 }
+		 
+		 
 	     
 		// TODO Auto-generated constructor stub
 	}
@@ -90,6 +95,21 @@ public  class AsxSocket implements AsxSocketCallback {
 		 
 		try 
 		{
+			if(s.contains("Register"))
+			{
+				Id = s.replace("Register:", "");
+				return;
+			}
+			
+			if(s.contains("Pong:"))
+			{				
+				String id = s.replace("Pong:", "");
+				if(this.Id.compareTo(id) > 3 && this.Id!="" && id.compareTo("00000000-0000-0000-0000-000000000000")<15)
+				{
+					this.Socket.close();
+				}
+				return;
+			}
 			 obj = (JSONObject) new JSONTokener(s).nextValue();
 			 msgType= obj.getInt("type");
 			 tk = obj.getJSONObject("track");
@@ -150,15 +170,16 @@ public  class AsxSocket implements AsxSocketCallback {
 				     Ringtone r = RingtoneManager.getRingtone(context, notification);
 				     r.play();
 				     
-				     vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-				     vibrator.vibrate(1000);
 				     
-				     notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-				     r = RingtoneManager.getRingtone(context, notification);
-				     r.play();
+				     //vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				     //vibrator.vibrate(1000);
 				     
-				     vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-				     vibrator.vibrate(1500);
+				     //notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+				     //r = RingtoneManager.getRingtone(context, notification);
+				     //r.play();
+				     
+				     //vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				     //vibrator.vibrate(1500);
 				     
 				     
 
@@ -190,7 +211,9 @@ public  class AsxSocket implements AsxSocketCallback {
 	     //{
 	     //	 this.Socket.send("Envio de mensagem");
 	      // }
-		isConnected = false;
-		AsxSocket.Reconnect();			
+		if(!ex.getMessage().contains("org.json.JSONObject")){
+			isConnected = false;
+			AsxSocket.Reconnect();			
+		}
 	}
 }
