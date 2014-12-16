@@ -190,6 +190,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	     //{
 	     //	 this.Socket.send("Envio de mensagem");
 	      // }
-		
+		isConnected = false;
+		AsxSocket.Reconnect();			
 	}
 }
