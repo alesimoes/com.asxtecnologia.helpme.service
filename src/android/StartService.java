@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -44,14 +45,14 @@ public class StartService extends Service{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-         // Se jÃƒÆ’Ã‚Â¡ tivr efetuado login starta o processo.
+         // Se jÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ tivr efetuado login starta o processo.
          if(Token.Token!="")
          {
-             // Inicia conexÃƒÆ’Ã‚Â£o com o servidor.
+             // Inicia conexÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â£o com o servidor.
             final AsxSocket socket = new AsxSocket(getApplicationContext());    
 
          
-             // ServiÃƒÆ’Ã‚Â§o de rastreamento.
+             // ServiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â§o de rastreamento.
              final tracker tk = new tracker();
              tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
             
@@ -68,7 +69,7 @@ public class StartService extends Service{
              registerReceiver(net,intentFilter);
 
              // Runable ping.
-             final handler = new Handler();
+              final Handler handler = new Handler();
 
             final Runnable r = new Runnable() {
                 public void run() {
@@ -78,10 +79,10 @@ public class StartService extends Service{
                 {
                     // null
                 }
-                    handler.postDelayed(this, 900000);
+                    handler.postDelayed(this, 1100000);
                 }
             };
-            handler.postDelayed(r, 900000);
+            handler.postDelayed(r, 1100000);
          }
         return start;
     }
