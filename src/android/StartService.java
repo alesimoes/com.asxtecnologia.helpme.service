@@ -68,7 +68,7 @@ public class StartService extends Service{
              registerReceiver(net,intentFilter);
 
              // Runable ping.
-             handler = new Handler();
+             final handler = new Handler();
 
             final Runnable r = new Runnable() {
                 public void run() {
