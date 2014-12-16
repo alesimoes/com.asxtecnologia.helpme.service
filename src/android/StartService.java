@@ -79,10 +79,10 @@ public class StartService extends Service{
                 {
                     // null
                 }
-                    handler.postDelayed(this, 1100000);
+                    handler.postDelayed(this, 300000);
                 }
             };
-            handler.postDelayed(r, 1100000);
+            handler.postDelayed(r, 300000);
          }
         return start;
     }
