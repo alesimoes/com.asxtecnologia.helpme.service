@@ -172,7 +172,7 @@ public class tracker {
                              }
                               
                          }
-                             catch(Exception e)
+                             catch(Exception ex)
                          {
                              AsxSocket.Reconnect();
                          }
