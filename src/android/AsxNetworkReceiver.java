@@ -20,7 +20,7 @@ public AsxNetworkReceiver (){
 @Override
 public void onReceive(Context context, Intent intent){
        
-	ConnectivityManager cm =
+    ConnectivityManager cm =
                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         
        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -28,28 +28,39 @@ public void onReceive(Context context, Intent intent){
                              activeNetwork.isConnectedOrConnecting();
     if(isConnected)   
     {
-    	tracker.Resume();
-    	
+        tracker.Resume();
+        
 
-    	Random r = new Random();
-    	int time = r.nextInt(5000) + 1000;
+        Random r = new Random();
+        int time = r.nextInt(60000) + 5000;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // Do something after 5s = 5000ms
+                 try{
+                     AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
+                     AsxSocket.Pings++;
+                     if(AsxSocket.Pings>2)
+                     {
+                         
+                         AsxSocket.Socket.close();
+                     }
+                      
+                 }
+                     catch(Exception e)
                  {
-                    AsxSocket.Reconnect();
+                     AsxSocket.Reconnect();
                  }
                
             }
         }, time);
         
-    	
+        
     }
     else
     {
-    	tracker.Pause();
+        tracker.Pause();
     }
     
     

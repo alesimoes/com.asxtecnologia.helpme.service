@@ -150,19 +150,32 @@ public class tracker {
             lastLongitude = Longitude;
                 try{
                     try {
-                        if(AsxSocket.Socket.isOpen())
-                        {
+                        //if(AsxSocket.Socket.isOpen())
+                        //{
                             AsxSocket.Socket.send( "{\"MessageType\":\"GPS\",\"Token\":\""+Token.Token+"\",\"Latitude\":"+ Latitude +",\"Longitude\":"+Longitude+"}");
-                        }
-                        else{
-                        	if(AsxSocket.Socket!=null)
-                        	{
-                        		AsxSocket.Reconnect();
-                        	}                        			
-                        }
-                    } catch (NotYetConnectedException e) {
+                        //}
+                        //else{
+                       // 	if(AsxSocket.Socket!=null)
+                       // 	{
+                       // 		AsxSocket.Reconnect();
+                       // 	}                        			
+                        //}
+                    } catch (Exception e) {
                         // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        try{
+                             AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
+                             AsxSocket.Pings++;
+                             if(AsxSocket.Pings>2)
+                             {
+                                 
+                                 AsxSocket.Socket.close();
+                             }
+                              
+                         }
+                             catch(Exception e)
+                         {
+                             AsxSocket.Reconnect();
+                         }
                     }
                 }finally
                 {

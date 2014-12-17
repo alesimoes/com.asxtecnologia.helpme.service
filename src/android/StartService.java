@@ -23,72 +23,76 @@ import android.widget.Toast;
 public class StartService extends Service{  
       
     
+    static Handler handler;
+    
+     static AsxSocket socket;
+     
       /** Called when the activity is first created. */
     @Override
     public void onCreate() {
         super.onCreate();
-        //Log.d("TAG", "Service created.");
-       // Toast.makeText(getApplicationContext(), "Service has ben created.",
-       //         Toast.LENGTH_LONG).show();
-        
-      
+        IniciaServicos();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
        
-         int start = super.onStartCommand(intent, flags, startId);
+         //int start = super.onStartCommand(intent, flags, startId);
          
          // tenta abrir o arquivo com o token.
+        
+        return START_STICKY;
+    }
+    
+    private void IniciaServicos()
+    {
          try {
-            Token.GetToken(openFileInput(Token.File));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-         // Se jÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ tivr efetuado login starta o processo.
-         if(Token.Token!="")
-         {
-             // Inicia conexÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â£o com o servidor.
-            final AsxSocket socket = new AsxSocket(getApplicationContext());    
-
-         
-             // ServiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§o de rastreamento.
-             final tracker tk = new tracker();
-             tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
-            
-             //Toast.makeText(getApplicationContext(), "Iniciado.",
-             //        Toast.LENGTH_LONG).show();
-             
-             // Inicia o broadcast de pedido de ajuda instantaneo.
-             AsxReceiver rc = new AsxReceiver();
-             registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_ON));    
-             
-             IntentFilter intentFilter = new IntentFilter();
-             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-             AsxNetworkReceiver net =  new AsxNetworkReceiver();
-             registerReceiver(net,intentFilter);
-
-             // Runable ping.
-             final Handler handler = new Handler();
-
-             final Runnable r = new Runnable() {
-                 public void run() {
-                     try{
-                     AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
-                      
-                 }
-                     catch(Exception e)
-                 {
-                     AsxSocket.Reconnect();
-                 }
-                     handler.postDelayed(this, 60000);
-                     
-                 }
-             };
-             handler.postDelayed(r, 60000);
+             Token.GetToken(openFileInput(Token.File));
+         } catch (FileNotFoundException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
          }
-        return start;
+          
+          if(Token.Token!="")
+          {
+             socket = new AsxSocket(getApplicationContext());    
+
+          
+              final tracker tk = new tracker();
+              tk.IniciarServico((LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE));       
+              AsxReceiver rc = new AsxReceiver();
+              registerReceiver(rc, new IntentFilter(Intent.ACTION_SCREEN_ON));    
+              
+              IntentFilter intentFilter = new IntentFilter();
+              intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+              AsxNetworkReceiver net =  new AsxNetworkReceiver();
+              registerReceiver(net,intentFilter);
+
+              // Runable ping.
+              handler = new Handler();
+
+              Runnable r = new Runnable() {
+                  public void run() {
+                      try{
+                      AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
+                      AsxSocket.Pings++;
+                      if(AsxSocket.Pings>2)
+                      {
+                          
+                          AsxSocket.Socket.close();
+                      }
+                       
+                  }
+                      catch(Exception e)
+                  {
+                      AsxSocket.Reconnect();
+                  }
+                      handler.postDelayed(this, 60000);
+                      
+                  }
+              };
+              handler.postDelayed(r, 60000);
+          }
     }
 
     @Override

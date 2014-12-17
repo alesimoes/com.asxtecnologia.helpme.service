@@ -35,6 +35,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	public static URI serverURI;
 	public static Boolean isConnected = true;
 	public static String Id="";
+	public static int Pings=0;
 	public AsxSocket( Context context) 
 	{		
 		  serverURI = null;
@@ -72,7 +73,7 @@ public  class AsxSocket implements AsxSocketCallback {
  	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
  	    		 AsxSocket.Socket.connect();
  	    		 //this.Socket = this;
- 	    	   
+ 	    		 AsxSocket.Id="";
  	        }
  	    }
           
@@ -95,9 +96,11 @@ public  class AsxSocket implements AsxSocketCallback {
 		 
 		try 
 		{
+
 			if(s.contains("Register"))
 			{
 				Id = s.replace("Register:", "");
+				AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");                    
 				return;
 			}
 			
@@ -106,8 +109,10 @@ public  class AsxSocket implements AsxSocketCallback {
 				String id = s.replace("Pong:", "");
 				if(this.Id.compareTo(id) > 3 && this.Id!="" && id.compareTo("00000000-0000-0000-0000-000000000000")<15)
 				{
+					this.Id="";
 					this.Socket.close();
 				}
+				this.Pings=0;
 				return;
 			}
 			 obj = (JSONObject) new JSONTokener(s).nextValue();
@@ -196,6 +201,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	public void onClosed() {
 		isConnected = false;
 		AsxSocket.Reconnect();	
+		this.Id="";
 	}
 	
 	@Override
