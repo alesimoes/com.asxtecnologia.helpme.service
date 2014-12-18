@@ -38,43 +38,53 @@ public  class AsxSocket implements AsxSocketCallback {
 	public static int Pings=0;
 	public AsxSocket( Context context) 
 	{		
-		  serverURI = null;
-			try {
-				serverURI = new URI("ws://helpmeapp.azurewebsites.net/Connection");
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				}
-			
-		//super(serverURI);
-		 if(AsxSocket.Socket==null)
-		 {
-		   	 AsxSocket.context = context;
-			 AsxSocket.Socket = new AsxWebSocketClient(serverURI, this);
-			 AsxSocket.Socket.connect();
-			 //this.Socket = this;
-		     if(AsxSocket.Socket.isConnecting())
-		     {
-		    	 AsxSocket.Socket.send("Envio de mensagem");
-		     }
-		 }
-		 
-		 
-	     
+		AsxSocket.context = context;
+		 this.Connect();	     
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void Connect()
+	{
+		serverURI = null;
+		try {
+			serverURI = new URI("ws://helpmeapp.azurewebsites.net/Connection");
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+		
+	//super(serverURI);
+	 if(AsxSocket.Socket==null)
+	 {
+	   	
+		 AsxSocket.Socket = new AsxWebSocketClient(serverURI, this);
+		 AsxSocket.Socket.connect();
+		 //this.Socket = this;
+	     if(AsxSocket.Socket.isConnecting())
+	     {
+	    	 AsxSocket.Socket.send("Envio de mensagem");
+	     }
+	 }
 	}
 	
 	public static void Reconnect()
 	{		
 		
     	if(AsxSocket.isConnected==false)
- 	    {   if(AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
- 	        {
- 	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
- 	    		 AsxSocket.Socket.connect();
- 	    		 //this.Socket = this;
- 	    		 AsxSocket.Id="";
- 	        }
+ 	    {
+    		if(AsxSocket.Socket != null)
+    		{
+	    		if(AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
+	 	        {
+	 	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
+	 	    		 AsxSocket.Socket.connect();
+	 	    		 //this.Socket = this;
+	 	    		 AsxSocket.Id="";
+	 	        }
+    		}else{
+    			//AsxSocket.Connect();
+    			AsxSocket s =new AsxSocket(AsxSocket.context);
+    		}
  	    }
           
 	}
@@ -134,7 +144,9 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					Notification n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está bem. O pedido de ajuda foi desativado."))
+					        .setContentText(name+ " está bem. O pedido de ajuda foi desativado.")
+					        
+					        //.setStyle(new Notification.BigTextStyle().bigText(name+ " estÃ bem. O pedido de ajuda foi desativado."))
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true)
@@ -156,7 +168,7 @@ public  class AsxSocket implements AsxSocketCallback {
 					// the addAction re-use the same intent to keep the example short
 					n  = new Notification.Builder(AsxSocket.context)
 					        .setContentTitle("HelpMe")
-					        .setStyle(new Notification.BigTextStyle().bigText(name+ " está precisando de sua ajuda. "))
+					        .setContentText(name+ " está precisando de sua ajuda.")
 					        .setSmallIcon(R.drawable.icon)
 					        .setContentIntent(pIntent)
 					        .setAutoCancel(true)

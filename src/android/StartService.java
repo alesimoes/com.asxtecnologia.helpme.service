@@ -74,7 +74,8 @@ public class StartService extends Service{
               Runnable r = new Runnable() {
                   public void run() {
                       try{
-                      AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");  
+                      AsxSocket.Socket.send("{\"MessageType\":\"Ping\",\"Id\":\""+AsxSocket.Id+"\"}");
+                      AsxSocket.context = getBaseContext();
                       AsxSocket.Pings++;
                       if(AsxSocket.Pings>2)
                       {
@@ -85,7 +86,12 @@ public class StartService extends Service{
                   }
                       catch(Exception e)
                   {
-                      AsxSocket.Reconnect();
+                        try{
+                          AsxSocket.Reconnect();
+                        }catch(Exception excption)
+                        {
+                          
+                        }
                   }
                       handler.postDelayed(this, 60000);
                       
