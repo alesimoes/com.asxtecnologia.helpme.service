@@ -64,7 +64,12 @@
                 <intent-filter>
                   <action android:name="android.intent.action.PACKAGE_REPLACED"/>
                   <data android:scheme="package"  />
-                </intent-filter>
+                </intent-filter>            
+        </receiver>   
+         <receiver android:name="com.asxtecnologia.helpme.service.AsxReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SCREEN_ON" />                  
+            </intent-filter>                           
         </receiver>         
         <service android:name="com.asxtecnologia.helpme.service.StartService"  android:exported="false">
        </service> 
