@@ -48,15 +48,15 @@ public void onReceive(Context context, Intent intent)
         Intent serviceIntent = new Intent(context, com.asxtecnologia.helpme.service.StartService.class);
          if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
          {
-         context.startService(serviceIntent);        
-         }
+            context.startService(serviceIntent);        
+         }else{
      
-         if(AsxSocket.context==null)
-         {
-             AsxSocket.Reconnect();
-         }
-         AsxSocket.context = context;
-           
+                 if(AsxSocket.context==null)
+                 {
+                     AsxSocket.Reconnect();
+                 }
+                 AsxSocket.context = context;
+           }
  }
 
 
