@@ -8,7 +8,11 @@ import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
 
-public class AsxReceiver extends BroadcastReceiver {
+
+
+public class AsxCheckService extends BroadcastReceiver 
+{
+Context _context;
 private static int countPowerOff = 0;
 
 public  AsxCheckService (){
@@ -22,11 +26,12 @@ public void onReceive(Context context, Intent intent)
     _context = context;
                        
         // Verifica se o serviÃ§o foi iniciado.
-        Intent serviceIntent = new Intent(context, com.asxtecnologia.helpme.service.StartService.class);
+         Intent serviceIntent = new Intent(context, com.asxtecnologia.helpme.service.StartService.class);
          if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
          {
             context.startService(serviceIntent);        
-         }else{
+         }else
+         {
      
                  if(AsxSocket.context==null)
                  {
@@ -37,7 +42,6 @@ public void onReceive(Context context, Intent intent)
  }
 
 
-Context _context;
 private boolean isMyServiceRunning(Class<?> serviceClass) {
    
     ActivityManager manager = (ActivityManager) _context.getSystemService(Context.ACTIVITY_SERVICE);
