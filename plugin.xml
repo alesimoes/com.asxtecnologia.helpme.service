@@ -42,6 +42,7 @@
      <source-file src="src/android/AlertActivity.java" target-dir="src/com/asxtecnologia/helpme/service"/>
      <source-file src="src/android/AsxReceiver.java" target-dir="src/com/asxtecnologia/helpme/service"/>
      <source-file src="src/android/AsxNetworkReceiver.java" target-dir="src/com/asxtecnologia/helpme/service"/>
+      <source-file src="src/android/AsxCheckService.java" target-dir="src/com/asxtecnologia/helpme/service"/>
      <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
             <uses-permission android:name="android.permission.VIBRATE" />
