@@ -68,3 +68,4 @@ private boolean isMyServiceRunning(Class<?> serviceClass) {
             }
 
 }
+}
