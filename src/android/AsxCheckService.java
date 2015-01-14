@@ -31,12 +31,17 @@ public void onReceive(Context context, Intent intent)
             context.startService(serviceIntent);        
          }else
          {
+            try{
      
                  if(AsxSocket.context==null)
                  {
                      AsxSocket.Reconnect();
                  }
                  AsxSocket.context = context;
+             }catch (Exception ex)
+             {
+                ;
+             }
            }
  }
 
@@ -51,8 +56,7 @@ private boolean isMyServiceRunning(Class<?> serviceClass) {
                     return true;
                 }
         }
-    return false;
-    }
+   
  }catch (Exception ex)
         {
             return false;
