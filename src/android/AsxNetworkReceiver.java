@@ -31,6 +31,7 @@ private boolean isMyServiceRunning(Class<?> serviceClass) {
         }
     return false;
     }
+    
 @Override
 public void onReceive(final Context context, Intent intent){
        

@@ -31,14 +31,14 @@ public class StartService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        IniciaServicos();
+        //IniciaServicos();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
        
          //int start = super.onStartCommand(intent, flags, startId);
-         
+         IniciaServicos();
          // tenta abrir o arquivo com o token.
         
         return START_STICKY;

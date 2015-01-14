@@ -12,11 +12,10 @@ import android.widget.Toast;
 
 public class AsxCheckService extends BroadcastReceiver 
 {
+
 Context _context;
 private static int countPowerOff = 0;
-
 public  AsxCheckService (){
-
 }
 
 @Override
@@ -43,7 +42,7 @@ public void onReceive(Context context, Intent intent)
 
 
 private boolean isMyServiceRunning(Class<?> serviceClass) {
-   
+   try{
     ActivityManager manager = (ActivityManager) _context.getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
              if (serviceClass.getName().equals(service.service.getClassName())) {
@@ -54,5 +53,9 @@ private boolean isMyServiceRunning(Class<?> serviceClass) {
         }
     return false;
     }
+ }catch (Exception ex)
+        {
+            return false;
+            }
 
 }
