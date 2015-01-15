@@ -24,18 +24,18 @@ public void onReceive(Context context, Intent intent)
         //if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
     _context = context;
     
-      Toast.makeText(context, "Verificando se o serviço está iniciado.", Toast.LENGTH_SHORT).show();
+      //Toast.makeText(context, "Verificando se o serviço está iniciado.", Toast.LENGTH_SHORT).show();
               
         // Verifica se o serviÃ§o foi iniciado.
          Intent serviceIntent = new Intent(context, com.asxtecnologia.helpme.service.StartService.class);
          if(!isMyServiceRunning(com.asxtecnologia.helpme.service.StartService.class))
          {
             context.startService(serviceIntent);     
-            Toast.makeText(context, "Serviço iniciado com sucesso.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Serviço iniciado com sucesso.", Toast.LENGTH_SHORT).show();
           
          }else
          {
-             Toast.makeText(context, "Serviço já estava em execução.", Toast.LENGTH_SHORT).show();
+             //Toast.makeText(context, "Serviço já estava em execução.", Toast.LENGTH_SHORT).show();
             try{
                  
                  if(AsxSocket.context==null || !AsxSocket.isConnected)
