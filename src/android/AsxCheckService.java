@@ -37,12 +37,12 @@ public void onReceive(Context context, Intent intent)
          {
              Toast.makeText(context, "Serviço já estava em execução.", Toast.LENGTH_SHORT).show();
             try{
-     
+                 
                  if(AsxSocket.context==null)
                  {
                      AsxSocket.Reconnect();
                  }
-                 AsxSocket.context = context;
+                // AsxSocket.context = context;
              }catch (Exception ex)
              {
                 ;

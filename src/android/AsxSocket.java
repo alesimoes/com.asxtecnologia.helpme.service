@@ -100,7 +100,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	
 	@Override
 	public void onOpen() {
-		
+
 		// Envia o pedido de registro
 		AsxSocket.Socket.send( "{\"MessageType\":\"Register\",\"Token\":\""+Token.Token+"\"}");
 		isConnected=true;
@@ -241,7 +241,7 @@ public  class AsxSocket implements AsxSocketCallback {
 	      // }
 		if(!ex.getMessage().contains("org.json.JSONObject")){
 			isConnected = false;
-			AsxSocket.Reconnect();			
+			//AsxSocket.Reconnect();			
 		}
 	}
 }
