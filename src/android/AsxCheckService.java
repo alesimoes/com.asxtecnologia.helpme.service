@@ -38,7 +38,7 @@ public void onReceive(Context context, Intent intent)
              Toast.makeText(context, "Serviço já estava em execução.", Toast.LENGTH_SHORT).show();
             try{
                  
-                 if(AsxSocket.context==null)
+                 if(AsxSocket.context==null || !AsxSocket.isConnected)
                  {
                      AsxSocket.Reconnect();
                  }
