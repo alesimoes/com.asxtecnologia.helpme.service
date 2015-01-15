@@ -45,52 +45,62 @@ public  class AsxSocket implements AsxSocketCallback {
 	
 	public void Connect()
 	{
-		serverURI = null;
-		try {
-			serverURI = new URI("ws://helpmeapp.azurewebsites.net/Connection");
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}
-		
-	//super(serverURI);
-	 if(AsxSocket.Socket==null)
-	 {
-	   	
-		 AsxSocket.Socket = new AsxWebSocketClient(serverURI, this);
-		 AsxSocket.Socket.connect();
-		 //this.Socket = this;
-	     if(AsxSocket.Socket.isConnecting())
-	     {
-	    	 AsxSocket.Socket.send("Envio de mensagem");
-	     }
-	 }
+		try{
+				serverURI = null;
+				try {
+					serverURI = new URI("ws://helpmeapp.azurewebsites.net/Connection");
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					}
+				
+			//super(serverURI);
+			 if(AsxSocket.Socket==null)
+			 {
+			   	
+				 AsxSocket.Socket = new AsxWebSocketClient(serverURI, this);
+				 AsxSocket.Socket.connect();
+				 //this.Socket = this;
+			     if(AsxSocket.Socket.isConnecting())
+			     {
+			    	 AsxSocket.Socket.send("Envio de mensagem");
+			     }
+			 }
+		}catch(Exception ex)
+		{
+			;
+		}
 	}
 	
 	public static void Reconnect()
 	{		
-		
-    	if(AsxSocket.isConnected==false)
- 	    {
-    		if(AsxSocket.Socket != null)
-    		{
-	    		if(AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
-	 	        {
-	 	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
-	 	    		 AsxSocket.Socket.connect();
-	 	    		 //this.Socket = this;
-	 	    		 AsxSocket.Id="";
-	 	        }
-    		}else{
-    			//AsxSocket.Connect();
-    			AsxSocket s =new AsxSocket(AsxSocket.context);
-    		}
- 	    }
+		try{
+	    	if(AsxSocket.isConnected==false)
+	 	    {
+	    		if(AsxSocket.Socket != null)
+	    		{
+		    		if(AsxSocket.Socket.isConnecting()==false && AsxSocket.Socket.isOpen()==false)
+		 	        {
+		 	        	 AsxSocket.Socket = new AsxWebSocketClient(serverURI, new AsxSocket(AsxSocket.context));
+		 	    		 AsxSocket.Socket.connect();
+		 	    		 //this.Socket = this;
+		 	    		 AsxSocket.Id="";
+		 	        }
+	    		}else{
+	    			//AsxSocket.Connect();
+	    			AsxSocket s =new AsxSocket(AsxSocket.context);
+	    		}
+	 	    }
+ 		}catch(Exception ex)
+		{
+			;
+		}
           
 	}
 	
 	@Override
 	public void onOpen() {
+		
 		// Envia o pedido de registro
 		AsxSocket.Socket.send( "{\"MessageType\":\"Register\",\"Token\":\""+Token.Token+"\"}");
 		isConnected=true;
