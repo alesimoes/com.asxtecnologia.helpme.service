@@ -42,7 +42,7 @@ public void onReceive(Context context, Intent intent)
                      }
                    
                 }
-            }, 15000);
+            }, 5000);
         }
         // Verifica se o serviÃ§o foi iniciado.
         Intent serviceIntent = new Intent(context, com.asxtecnologia.helpme.service.StartService.class);
